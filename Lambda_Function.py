@@ -1,32 +1,41 @@
 import json
 import boto3
 
+s3 = boto3.client('s3')
+
 def lambda_handler(event, context):
     # TODO implement
-    # 1. IAM User for trigger the Lambda Function
-    file_name = event['Records'][0]['s3']['object']['key'];
-    service_name='s3'
-    region_name='ap-south-1'
-    aws_access_key_id='AKIAS63ZKOQK6LSG2G7T'
-    aws_secret_access_key='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'
     
-    # 2. Get data from S3 (Specified region)
-    s3 = boto3.resource(
-        service_name = service_name,
-        region_name = region_name,
-        aws_access_key_id = aws_access_key_id,
-        aws_secret_access_key = aws_secret_access_key
-        )
+    #1 - Print Source bucket name
+    source_bucket = event['Records'][0]['s3']['bucket']['name']
+    print(source_bucket)
+
+    #2 - Print .json filename
+    json_file = event['Records'][0]['s3']['object']['key']
+    print(json_file)
+
+    #3 - Print file objects(metadata) of json_file
+    json_file_obj = s3_client.get_object(Bucket=source_bucket, Key=json_file)
+    print(json_file_obj)
+
+    #4 - Print the file content
+    data = json_file_obj['Body'].read().decode('utf-8')
+    print(data)
     
-    # 3. Copy data to another S3 bucket
-    copy_source = {
-        'Bucket': 'learning-source-bucket',
-        'Key': file_name
-    }
+    #5. Print Destination bucket name
+    destination_bucket = 'learning-destination-bucket'
+    print(destination_bucket)
     
-    # 4. For specifying file_name and modification for destination bucket
-    s3.meta.client.copy(copy_source,'learning-destination-bucket',file_name)
-    
+    #6. Copy data from Source Bucket
+    copy_source = {'Bucket': source_bucket, 'Key': json_file}
+   
+    #7. Copy to Destination Bucket
+    try:
+        s3.copy_object(Bucket=destination_bucket, Key=json_file, CopySource=copy_source)
+        return response['ContentType']
+    except:
+        print("ERROR: Could not copy data in Destination Bucket table")
+        
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
