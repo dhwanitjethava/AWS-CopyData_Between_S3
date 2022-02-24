@@ -1,7 +1,8 @@
+import sys
 import json
 import boto3
 
-s3 = boto3.client('s3')
+s3_client = boto3.client('s3')
 
 def lambda_handler(event, context):
     # TODO implement
@@ -27,14 +28,20 @@ def lambda_handler(event, context):
     print(destination_bucket)
     
     #6. Copy data from Source Bucket
-    copy_source = {'Bucket': source_bucket, 'Key': json_file}
+    copy_source = {'Bucket':source_bucket, 'Key':json_file}
    
     #7. Copy to Destination Bucket
     try:
-        s3.copy_object(Bucket=destination_bucket, Key=json_file, CopySource=copy_source)
-        return response['ContentType']
+        response = s3_client.copy_object(Bucket = destination_bucket, Key = json_file, CopySource = copy_source)
     except:
-        print("ERROR: Could not copy data in Destination Bucket table")
+        print("ERROR: Could not copy data in Destination Bucket")
+    
+    #8 - Delete file after move data from Source Bucket
+    print("Deleting the file from S3 bucket")
+    try:
+        response = s3_client.delete_object(Bucket=source_bucket, Key=json_file)
+    except:
+        print("ERROR: Deletion is not successful!")
         
     return {
         'statusCode': 200,
