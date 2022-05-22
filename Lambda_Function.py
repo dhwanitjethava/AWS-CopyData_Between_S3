@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     print(data)
     
     #5. Print Destination bucket name
-    destination_bucket = 'learning-destination-bucket'
+    destination_bucket = '<Enter name of the destination bucket>'
     print(destination_bucket)
     
     #6. Copy data from Source Bucket
