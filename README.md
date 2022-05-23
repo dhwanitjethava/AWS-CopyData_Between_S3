@@ -1,6 +1,10 @@
 # AWS : Copy/Move Data Between S3 Buckets
 #### Services used :
     AWS S3, Amazon CloudWatch, AWS Lambda, Amazon IAM
+
+### Dataflow Diagram:
+<img width="1342" alt="AWS_CopyData_Between_S3" src="C:\Users\Ashok Jethava\Desktop\GitHub Repository\AWS_CopyData_Between_S3\AWS_CopyData_Between_S3.jpg">
+
 ### AWS S3 Buckets configuration:
 Our goal is to MOVE or COPY data between S3 buckets. First of all we need to create two buckets.
 One bucket is source bucket and one bucket is destination bucket. Both buckets should have the same region.
