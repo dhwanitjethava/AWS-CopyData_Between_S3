@@ -3,7 +3,7 @@
     AWS S3, Amazon CloudWatch, AWS Lambda, Amazon IAM
 
 ### Dataflow Diagram:
-![AWS_CopyData_Between_S3](C:\Users\Ashok Jethava\Desktop\GitHub Repository\AWS_CopyData_Between_S3\AWS_CopyData_Between_S3.jpg)
+![AWS_CopyData_Between_S3](https://user-images.githubusercontent.com/96478746/169760292-90e69a83-95dd-43b2-b80c-4b285d8aea3b.jpg)
 
 ### AWS S3 Buckets configuration:
 Our goal is to MOVE or COPY data between S3 buckets. First of all we need to create two buckets.
